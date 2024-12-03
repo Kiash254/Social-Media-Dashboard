@@ -9,7 +9,7 @@ import { getAccounts, createAccount, updateAccount, deleteAccount, getPosts, cre
 function Dashboard() {
     const [accounts, setAccounts] = useState([]);
     const [posts, setPosts] = useState([]);
-    const [newAccount, setNewAccount] = useState({ platform: '', username: '', access_token: '' });
+    const [newAccount, setNewAccount] = useState({ platform: '', username: '', access_token: '', followers: 0 });
     const [newPost, setNewPost] = useState({ account: '', content: '', scheduled_time: '' });
     const [editAccount, setEditAccount] = useState(null);
     const [editPost, setEditPost] = useState(null);
@@ -31,7 +31,7 @@ function Dashboard() {
         } else {
             createAccount(newAccount).then(response => setAccounts([...accounts, response.data]));
         }
-        setNewAccount({ platform: '', username: '', access_token: '' });
+        setNewAccount({ platform: '', username: '', access_token: '', followers: 0 });
         setShowAccountModal(false);
     };
 
@@ -138,6 +138,10 @@ function Dashboard() {
                         <Form.Group controlId="formAccessToken">
                             <Form.Label>Access Token</Form.Label>
                             <Form.Control type="text" placeholder="Enter access token" value={newAccount.access_token} onChange={(e) => setNewAccount({ ...newAccount, access_token: e.target.value })} />
+                        </Form.Group>
+                        <Form.Group controlId="formFollowers">
+                            <Form.Label>Followers</Form.Label>
+                            <Form.Control type="number" placeholder="Enter number of followers" value={newAccount.followers} onChange={(e) => setNewAccount({ ...newAccount, followers: e.target.value })} />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             {editAccount ? 'Update Account' : 'Add Account'}
