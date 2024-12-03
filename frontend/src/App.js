@@ -115,7 +115,7 @@ function App() {
                             </ListGroup>
                         </Col>
                     </Row>
-                    <DashboardCharts />
+                    <DashboardCharts accounts={accounts} posts={posts} />
                 </Col>
             </Row>
 
