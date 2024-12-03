@@ -32,35 +32,6 @@ body {
 }
 
 .container-fluid {
-  padding-left: 220px; 
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-  }
-
-  .container-fluid {
-      padding-left: 0;
-  }
-}
-
-
-/* frontend/src/index.css */
-.sidebar {
-  background-color: #f8f9fa;
-  padding: 20px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  z-index: 1000;
-}
-
-.container-fluid {
   padding-left: 220px; /* Adjust this value based on the sidebar width */
 }
 
@@ -75,3 +46,5 @@ body {
       padding-left: 0;
   }
 }
+
+

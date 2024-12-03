@@ -2,12 +2,13 @@
 import React from 'react';
 import { Bar, Pie, Scatter, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { Row, Col } from 'react-bootstrap';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend, ArcElement);
 
 function DashboardCharts({ accounts, posts }) {
-    const barData = {
-        labels: accounts.map(account => account.platform),
+    const followersData = {
+        labels: accounts.map(account => account.username),
         datasets: [
             {
                 label: 'Followers',
@@ -17,13 +18,13 @@ function DashboardCharts({ accounts, posts }) {
         ],
     };
 
-    const pieData = {
-        labels: accounts.map(account => account.platform),
+    const postsData = {
+        labels: posts.map(post => new Date(post.scheduled_time).toLocaleDateString()),
         datasets: [
             {
-                label: 'Number of Posts',
-                data: accounts.map(account => account.number_of_posts),
-                backgroundColor: ['#3b5998', '#00acee', '#C13584'],
+                label: 'Posts',
+                data: posts.map(post => post.content.length),
+                backgroundColor: '#00acee',
             },
         ],
     };
@@ -31,9 +32,12 @@ function DashboardCharts({ accounts, posts }) {
     const scatterData = {
         datasets: [
             {
-                label: 'Posts vs Followers',
-                data: accounts.map(account => ({ x: account.number_of_posts, y: account.followers })),
-                backgroundColor: '#00acee',
+                label: 'Posts Length vs Followers',
+                data: posts.map(post => ({
+                    x: accounts.find(account => account.id === post.account).followers,
+                    y: post.content.length,
+                })),
+                backgroundColor: '#C13584',
             },
         ],
     };
@@ -43,7 +47,7 @@ function DashboardCharts({ accounts, posts }) {
         datasets: [
             {
                 label: 'Posts Over Time',
-                data: posts.map(post => post.id),
+                data: posts.map(post => post.content.length),
                 borderColor: '#3b5998',
                 fill: false,
             },
@@ -53,10 +57,22 @@ function DashboardCharts({ accounts, posts }) {
     return (
         <div className="my-4">
             <h2 className="text-center">Social Media Statistics</h2>
-            <Bar data={barData} />
-            <Pie data={pieData} />
-            <Scatter data={scatterData} />
-            <Line data={lineData} />
+            <Row>
+                <Col md={6}>
+                    <Bar data={followersData} />
+                </Col>
+                <Col md={6}>
+                    <Pie data={followersData} />
+                </Col>
+            </Row>
+            <Row>
+                <Col md={6}>
+                    <Scatter data={scatterData} />
+                </Col>
+                <Col md={6}>
+                    <Line data={lineData} />
+                </Col>
+            </Row>
         </div>
     );
 }
