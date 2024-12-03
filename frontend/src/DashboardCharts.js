@@ -73,6 +73,11 @@ function DashboardCharts({ accounts, posts }) {
                     <Line data={lineData} />
                 </Col>
             </Row>
+            <Row>
+                <Col md={12}>
+                    <Bar data={postsData} />
+                </Col>
+            </Row>
         </div>
     );
 }

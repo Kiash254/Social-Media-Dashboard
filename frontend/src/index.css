@@ -47,4 +47,10 @@ body {
   }
 }
 
-
+.landing-page {
+  height: 80vh; /* Reduced height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
