@@ -14,3 +14,5 @@ export const getPost = (id) => axios.get(`${API_URL}posts/${id}/`);
 export const createPost = (post) => axios.post(`${API_URL}posts/`, post);
 export const updatePost = (id, post) => axios.put(`${API_URL}posts/${id}/`, post);
 export const deletePost = (id) => axios.delete(`${API_URL}posts/${id}/`);
+
+// Add new endpoints for fetching statistics if needed

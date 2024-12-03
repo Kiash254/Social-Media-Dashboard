@@ -19,3 +19,15 @@ body {
 .text-center {
   text-align: center !important;
 }
+/* frontend/src/index.css */
+.sidebar {
+  background-color: #f8f9fa;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  width: 200px;
+}
+
+.container-fluid {
+  margin-left: 200px;
+}
