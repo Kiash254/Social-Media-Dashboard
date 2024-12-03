@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, ListGroup, Modal, Form } from 'react-bootstrap';
 import Sidebar from './Sidebar';
 import DashboardCharts from './DashboardCharts';
+import Login from './Login';
+import Register from './Register';
 import { getAccounts, createAccount, updateAccount, deleteAccount, getPosts, createPost, updatePost, deletePost } from './services/api';
 
 function App() {
+    const [authenticated, setAuthenticated] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const [posts, setPosts] = useState([]);
     const [newAccount, setNewAccount] = useState({ platform: '', username: '', access_token: '' });
@@ -15,9 +18,11 @@ function App() {
     const [showPostModal, setShowPostModal] = useState(false);
 
     useEffect(() => {
-        getAccounts().then(response => setAccounts(response.data));
-        getPosts().then(response => setPosts(response.data));
-    }, []);
+        if (authenticated) {
+            getAccounts().then(response => setAccounts(response.data));
+            getPosts().then(response => setPosts(response.data));
+        }
+    }, [authenticated]);
 
     const handleAccountSubmit = (e) => {
         e.preventDefault();
@@ -66,6 +71,22 @@ function App() {
     const handleDeletePost = (id) => {
         deletePost(id).then(() => setPosts(posts.filter(post => post.id !== id)));
     };
+
+    if (!authenticated) {
+        return (
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Col md={6}>
+                        <h1>Welcome to Social Media Dashboard</h1>
+                        <Button variant="primary" onClick={() => setAuthenticated('login')}>Login</Button>
+                        <Button variant="secondary" onClick={() => setAuthenticated('register')} className="ml-2">Register</Button>
+                    </Col>
+                </Row>
+                {authenticated === 'login' && <Login setAuthenticated={setAuthenticated} />}
+                {authenticated === 'register' && <Register setAuthenticated={setAuthenticated} />}
+            </Container>
+        );
+    }
 
     return (
         <Container fluid>
